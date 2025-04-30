@@ -1,71 +1,71 @@
 package srcmain;
 
+import srcmain.PlayerInfo;
+
 import java.util.*;
 
 public class Player {
-    private static final int MAX_NICKNAME_SIZE = 20;
-    private static final int MAX_PLAYER_SIZE = 4;
-    private static final int MAX_HAND_SIZE = 5;
-    private Map<String, Integer> player = new HashMap<>();
-    private String name;
-    private int money = 10000;
-    private List<Map.Entry<String, Integer>> player_list = new ArrayList<>(player.entrySet());
+    private static final int MAX_PLAYERS = 4;
+    private static final int MAX_NAME_LEN = 20;
 
-    Scanner sc = new Scanner(System.in);
+    private final List<PlayerInfo> players = new ArrayList<>();
+    private final Scanner sc = new Scanner(System.in);
 
-    public void printPlayers() {
-        player_list = new ArrayList<>(player.entrySet()); // 항상 최신화
-        for (int i = 0; i < player_list.size(); i++) {
-            Map.Entry<String, Integer> entry = player_list.get(i);
-            System.out.println((i+1) + "번 플레이어 [닉네임: " + entry.getKey() + "] , [잔액: " + entry.getValue()+"]");
-        }
+    public List<PlayerInfo> getPlayers() {
+        return players;
     }
 
-    public void addPlayer(int count) {
-        int i = 0;
-        String nickname;
-        while (i < count) {
-            System.out.print((i + 1) + "번째 플레이어의 닉네임을 입력해 주세요. :");
-            nickname = sc.nextLine();
-            if (nickname == null || nickname.trim().isEmpty()) {
+    public void setupPlayers() {
+        int count = inputPlayerCount();
+
+        Set<String> nicknames = new HashSet<>();
+        for (int i = 0; i < count; ) {
+            System.out.print((i + 1) + "번째 플레이어 닉네임 입력: ");
+            String name = sc.nextLine().trim();
+
+            if (name.isEmpty()) {
                 System.out.println("닉네임을 입력해 주세요.");
                 continue;
             }
-            if (nickname.length() > MAX_NICKNAME_SIZE) {
-                System.out.println("닉네임은 " + MAX_NICKNAME_SIZE + "글자 이상 생성이 불가능 합니다.");
+
+            if (name.length() > MAX_NAME_LEN) {
+                System.out.println("닉네임은 " + MAX_NAME_LEN + "자 이하여야 합니다.");
                 continue;
             }
 
-            if (player.containsKey(nickname)) {
-                System.out.println("중복된 닉네임 입니다.");
+            if (nicknames.contains(name)) {
+                System.out.println("중복된 닉네임입니다. 다른 닉네임을 입력해 주세요.");
                 continue;
             }
-                player.put(nickname, money);
-                System.out.println(nickname + " 플레이어가 생성되었습니다.\t 잔액:" + money);
-                i++;
 
+            players.add(new PlayerInfo(name));
+            nicknames.add(name);
+            i++;
+            System.out.println(name + " 플레이어가 생성되었습니다.");
         }
     }
 
-
-    public int startPlayerSetting() {
-        int count = 0;
+    private int inputPlayerCount() {
         while (true) {
             try {
-                System.out.print("생성할 플레이어 수를 입력해 주세요. (최대 " + MAX_PLAYER_SIZE + "명) :");
-                count = Integer.parseInt(sc.nextLine());
-                if (count >= 1 && count <= MAX_PLAYER_SIZE) {
-                    System.out.println("플레이할 플레이어 수는"+count+"명입니다.");
-                    break;
+                System.out.print("플레이할 플레이어의 수를 입력해 주세요 : (1~" + MAX_PLAYERS + "): ");
+                int count = Integer.parseInt(sc.nextLine());
+                if (count >= 1 && count <= MAX_PLAYERS) {
+                    System.out.println(count+"명의 플레이어가 게임을 시작합니다.");
+                    return count;
                 }else {
-                    System.out.println("잘못 입력하셨습니다.");
+                    System.out.println("1 ~ 4 명의 플레이어만 플레이 가능합니다.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("숫자를 입력해 주세요.");
+                System.out.println("숫자를 입력하세요.");
             }
-
         }
-        return count;
     }
 
+
+    public void printPlayers() {
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println((i + 1) + "번 " + players.get(i));
+        }
+    }
 }

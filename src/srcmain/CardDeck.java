@@ -1,11 +1,11 @@
 package srcmain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CardDeck extends Card{
-        private static srcmain.CardDeck cd = new srcmain.CardDeck();
+        private static CardDeck cd = new CardDeck();
         private final int CARD_NUM = 52;
+        private int currentIndex = 0;
         Card[] card = new Card[CARD_NUM];
 
 
@@ -35,7 +35,23 @@ public class CardDeck extends Card{
 
         }
 
-        public static srcmain.CardDeck getInstance(){
+    public void shuffle() {
+        List<Card> list = Arrays.asList(card);
+        Collections.shuffle(list);
+        card = list.toArray(new Card[0]);
+        currentIndex = 0;
+    }
+
+
+
+    public Card drawCard() {
+        if (currentIndex >= card.length) {
+            throw new IllegalStateException("카드가 부족합니다.");
+        }
+        return card[currentIndex++];
+    }
+
+        public static CardDeck getInstance(){
             return cd;
         }
 
