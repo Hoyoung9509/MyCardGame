@@ -10,9 +10,9 @@ public class Dealer {
     }
 
 
-    public void dealCards(List<PlayerInfo> players) {
+    public void dealCards(List<Player> players) {
         deck.shuffle();
-        for (PlayerInfo player : players) {
+        for (Player player : players) {
             List<Card> hand = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
                 hand.add(deck.drawCard());

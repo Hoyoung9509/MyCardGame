@@ -18,7 +18,7 @@ public class CardDeck extends Card{
 
             int i = 0;
             for (String kind : kinds){
-                for (int number = 1; number <= 13; number++) {
+                for (int number = 2; number <= 14; number++) {
                     String num = String.valueOf(number);
 
                     if (number == 11){
@@ -28,6 +28,8 @@ public class CardDeck extends Card{
                         num ="Q";
                     }else if (number == 13){
                         num = "K";
+                    }else if (number == 14){
+                        num = "A";
                     }
                     card[i++] = new Card(kind, num);
                 }

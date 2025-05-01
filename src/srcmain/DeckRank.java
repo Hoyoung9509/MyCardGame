@@ -32,7 +32,7 @@ public class DeckRank {
         }
         Collections.sort(numbers);
         return numbers;
-    }
+    }   
 
     private boolean isFlush(List<Card> hand) {
         String kind = hand.get(0).KIND;
