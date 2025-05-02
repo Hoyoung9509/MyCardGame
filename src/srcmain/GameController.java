@@ -3,24 +3,33 @@ package srcmain;
 import java.util.*;
 
 public class GameController {
-    public static void start(){
-
-        CardDeck cd = CardDeck.getInstance();
+    public static void start() {
         PlayerManager pm = new PlayerManager();
-        Dealer dealer = new Dealer();
+        pm.setupPlayers();
         List<Player> players = pm.getPlayers();
 
-        pm.setupPlayers();
-        System.out.println("=== Player List ===");
-        pm.printPlayers();
-        System.out.println("=== Player Hand List ===");
-        dealer.dealCards(players);
-        for (int i = 0; i < players.size();i++){
-        System.out.println((i+1)+"번 플레이어 핸드 : "+players.get(i).getHand());
-        }
-        /*for (Card c : cd.card) {
-            System.out.println(c);
-        }*/
+        Dealer dealer = new Dealer();
 
+        for (int i = 1; i <= 100; i++) {
+            System.out.println("===== " + i + "번째 게임 =====");
+            dealer.dealCards(players);
+            dealer.evaluateRound(players);
+        }
+
+
+        for (int i = 0; i < players.size() - 1; i++) {
+            for (int j = i + 1; j < players.size(); j++) {
+                if (players.get(i).getWin() < players.get(j).getWin()) {
+                    Player temp = players.get(i);
+                    players.set(i, players.get(j));
+                    players.set(j, temp);
+                }
+            }
+        }
+
+        System.out.println("===== 최종 결과 (승 수 내림차순) =====");
+        for (Player p : players) {
+            System.out.println(p);
+        }
     }
 }

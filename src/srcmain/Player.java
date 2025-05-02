@@ -18,6 +18,7 @@ public class Player {
     }
     public void win(){
         this.win++;
+        this.money += 100;
     }
     public void lose(){
         this.lose++;
@@ -43,5 +44,9 @@ public class Player {
                 ", win=" + win +
                 ", lose=" + lose +
                 '}';
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

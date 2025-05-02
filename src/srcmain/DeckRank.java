@@ -11,6 +11,18 @@ public class DeckRank {
         CARD_VALUES.put("J", 11); CARD_VALUES.put("Q", 12); CARD_VALUES.put("K", 13);
         CARD_VALUES.put("A", 14);
     }
+    public String getHandRankName(List<Card> hand) {
+        if (isRoyalStraightFlush(hand)) return "로열 스트레이트 플러시";
+        if (isStraightFlush(hand)) return "스트레이트 플러시";
+        if (isFourOfAKind(hand)) return "포카드";
+        if (isFullHouse(hand)) return "풀 하우스";
+        if (isFlush(hand)) return "플러시";
+        if (isStraight(hand)) return "스트레이트";
+        if (isThreeOfAKind(hand)) return "트리플";
+        if (isTwoPair(hand)) return "투 페어";
+        if (isOnePair(hand)) return "원 페어";
+        return "하이 카드";
+    }
 
     public int evaluate(List<Card> hand) {
         if (isRoyalStraightFlush(hand)) return 100;

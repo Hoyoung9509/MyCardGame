@@ -17,6 +17,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return /*"Card{" + "NUMBER=" + NUMBER + ", KIND='" + KIND + '\'' + '}'*/ NUMBER+"/"+KIND;
+        return  NUMBER+"/"+KIND;
     }
 }
